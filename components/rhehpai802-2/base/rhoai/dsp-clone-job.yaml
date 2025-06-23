@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dsp-clone-job-rhehpai802-2-gitops
+spec:
+  template:
+    metadata:
+      name: dsp-clone-job-rhehpai802-2-gitops
+    spec:
+      serviceAccountName: rhehpai802-2-dsp-job
+      containers:
+        - name: initialize-dsp
+          image: quay.io/redhat-ai-dev/utils:latest
+          command:
+            - /bin/bash
+            - -c
+            - |
+              NS=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
+              oc wait -l statefulset=rhehpai802-2-notebook --for=condition=ready pod --timeout=300s
+              oc exec  StatefulSet/rhehpai802-2-notebook -- git clone https://github.com/rhdh-JslYoon-org/rhdhpai802-2
+      restartPolicy: Never

@@ -1,0 +1,12 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: rhehpai802-2-dsp-job-rolebinding
+subjects:
+  - kind: ServiceAccount
+    name: rhehpai802-2-dsp-job
+    namespace: rhdhpai802-2
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: rhehpai802-2-dsp-job-role
